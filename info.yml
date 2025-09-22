@@ -1,0 +1,24 @@
+project:
+  name: 'ISII-2526-GrupoX-Team'
+  owner: 'GrupoX'
+  teamId: 'Team'
+  identities: {}
+  notifications:
+    email: 'member1@alu.uclm.es,member2@alu.uclm.es,member3@alu.uclm.es,member4@alu.uclm.es'
+  members:
+    member1:
+      name: 'Name1'
+      surname: 'Surname1' 
+      githubUsername: 'Name1gitUserName1'
+    member2:
+      name: 'Name2'
+      surname: 'Surname2' 
+      githubUsername: 'Name1gitUserName2'
+    member3:
+      name: 'Name3'
+      surname: 'Surname3' 
+      githubUsername: 'Name1gitUserName3'
+    member4:
+      name: 'Name4'
+      surname: 'Surname4' 
+      githubUsername: 'Name1gitUserName4'

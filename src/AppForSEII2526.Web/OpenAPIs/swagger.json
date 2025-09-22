@@ -1,0 +1,18 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "AppForMovies.API",
+    "description": "This API provides services for renting and purchasing movies",
+    "contact": {
+      "name": "Software Engineering II Team",
+      "email": "isii@on.uclm.es"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/license/mit/"
+    },
+    "version": "v1"
+  },
+  "paths": { },
+  "components": { }
+}
