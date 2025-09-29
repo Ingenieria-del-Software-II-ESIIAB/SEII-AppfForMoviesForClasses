@@ -9,5 +9,7 @@
 
         [Precision(10,2)]
         public decimal CostofRental { get; set; }
+
+        public IList<RentalItem> RentalItems { get; set; }
     }
 }
