@@ -1,24 +1,28 @@
 project:
-  name: 'ISII-2526-GrupoX-Team'
-  owner: 'GrupoX'
-  teamId: 'Team'
+  name: 'ISII-2526-GrupoI-SEIITestingProject'
+  owner: 'GrupoI'
+  teamId: 'SEIITestingProject'
   identities: {}
   notifications:
-    email: 'member1@alu.uclm.es,member2@alu.uclm.es,member3@alu.uclm.es,member4@alu.uclm.es'
+    email: 'elena.navarro@uclm.es,Aurora.Macias@alu.uclm.es,Clara.Ayora@uclm.es,MariaElena.Pretel@uclm.es, Noelia.Gonzalez@uclm.es'
   members:
     member1:
-      name: 'Name1'
-      surname: 'Surname1' 
-      githubUsername: 'Name1gitUserName1'
+      name: 'Elena'
+      surname: 'Navarro' 
+      githubUsername: 'ElenaNavarro'
     member2:
-      name: 'Name2'
-      surname: 'Surname2' 
-      githubUsername: 'Name1gitUserName2'
+      name: 'Aurora'
+      surname: 'Macías' 
+      githubUsername: 'auroramo'
     member3:
-      name: 'Name3'
-      surname: 'Surname3' 
-      githubUsername: 'Name1gitUserName3'
+      name: 'Clara'
+      surname: 'Ayora' 
+      githubUsername: 'claayes'
     member4:
-      name: 'Name4'
-      surname: 'Surname4' 
-      githubUsername: 'Name1gitUserName4'
+      name: 'Elena'
+      surname: 'Pretel' 
+      githubUsername: 'ElenaPretelFdez'
+    member5:
+      name: 'Noelia'
+      surname: 'Gonzalez' 
+      githubUsername: 'N0eliaGS'
