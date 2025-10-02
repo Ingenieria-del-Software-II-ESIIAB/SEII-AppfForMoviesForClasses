@@ -6,5 +6,7 @@
 
 
         public Purchase Purchase { get; set; }
+
+         public Movie Movie { get; set; }
     }
 }
