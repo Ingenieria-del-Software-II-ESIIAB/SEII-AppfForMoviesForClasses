@@ -23,7 +23,7 @@
 
         public PaymentMethodTypes PaymentMethod { get; set; }
 
-
+        public ApplicationUser Customer { get; set; }
 
     }
 
