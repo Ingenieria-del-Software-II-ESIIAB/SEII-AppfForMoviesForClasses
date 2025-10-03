@@ -14,6 +14,6 @@ public class ApplicationUser : IdentityUser {
     [Required]
     public string Address { get; set; }
 
-
+    public IList<Rental> Rentals { get; set; }
 
 }
