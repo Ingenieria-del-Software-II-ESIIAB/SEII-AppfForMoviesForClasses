@@ -23,7 +23,17 @@
 
         public PaymentMethodTypes PaymentMethod { get; set; }
 
+
+        //if the Customer is deleted the related Rental won't be deleted
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public ApplicationUser Customer { get; set; }
+
+
+        //if we want to specify the foreign key
+        //public string CustomerId { get; set; }
+
+        //[ForeignKey(nameof(CustomerId))]
+        //public ApplicationUser Customer { get; set; }
 
     }
 
