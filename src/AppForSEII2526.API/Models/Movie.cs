@@ -33,5 +33,7 @@
         [Display(Name = "Quantity For Renting")]
         [Range(1, int.MaxValue, ErrorMessage = "Minimum quantity for renting is 1")]
         public int QuantityForRental { get; set; }
+
+        public IList<RentalItem> RentalItems { get; set; }
     }
 }
