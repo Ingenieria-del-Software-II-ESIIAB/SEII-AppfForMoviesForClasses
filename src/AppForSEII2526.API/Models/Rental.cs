@@ -21,7 +21,7 @@
         public DateTime RentalDateFrom { get; set; }
         public DateTime RentalDateTo { get; set; }
 
-        public PaymentMethodTypes PaymentMethod { get; set; }
+        public PaymentMethodType PaymentMethod { get; set; }
 
 
         //if the Customer is deleted the related Rental won't be deleted
