@@ -1,4 +1,5 @@
 ﻿namespace AppForSEII2526.API.Models {
+    [Index(nameof(Title),IsUnique=true)]
     public class Movie {
 
         public int Id { get; set; }
@@ -16,7 +17,8 @@
         [Range(0, int.MaxValue, ErrorMessage = "Minimum quantity for Purchase is 1")]
         public int QuantityForPurchase { get; set; }
 
-
+        //required to avoid an OnCascade delete
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public Genre Genre { get; set; }
 
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
