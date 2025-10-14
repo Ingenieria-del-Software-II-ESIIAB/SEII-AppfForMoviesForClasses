@@ -13,25 +13,28 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        projects_to_compile: ['src/AppForSEII2526.API', 'src/AppForSEII2526.Web', 'test/AppForSEII2526.UT', 'test/AppForSEII2526.UIT']
+        project_for_UT: ['test/AppForSEII2526.UT/AppForSEII2526.UT.csproj']
+
     steps:
       - name: Check out repository code 
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
-      - name: Restore dependencies
-        run: dotnet restore ./AppForSEII2526.sln
+      - name: Restore dependencies        
+        run: dotnet restore ${{ matrix.projects_to_compile }} 
 
       - name: Build the solution
-        run: dotnet build ./AppForSEII2526.sln --configuration Release --no-restore
+        run: dotnet build ${{ matrix.projects_to_compile }}  --configuration Release --no-restore
 
       - name: Run unit tests with report
-        run: dotnet test ./test/AppForSEII2526.UT/AppForSEII2526.UT.csproj --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
+        run: dotnet test ${{ matrix.projects_to_compile }} --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
