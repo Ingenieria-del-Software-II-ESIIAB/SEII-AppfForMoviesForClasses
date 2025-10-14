@@ -43,7 +43,7 @@ jobs:
           dotnet build ${{ env.UIT }}  --configuration Release --no-restore
 
       - name: Run unit tests with report
-        run: dotnet test ${{ env.UT } --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
+        run: dotnet test ${{ env.UT }} --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
