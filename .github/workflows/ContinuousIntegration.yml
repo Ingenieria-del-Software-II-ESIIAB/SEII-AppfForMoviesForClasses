@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         projects_to_compile: ['src/AppForSEII2526.API', 'src/AppForSEII2526.Web', 'test/AppForSEII2526.UT', 'test/AppForSEII2526.UIT']
-        project_for_UT: ['test/AppForSEII2526.UT/AppForSEII2526.UT.csproj']
+        project_for_UT: ['./test/AppForSEII2526.UT/AppForMovies.UT.csproj']
 
     steps:
       - name: Check out repository code 
