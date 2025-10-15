@@ -24,5 +24,14 @@
 
         public DateTime? LastRental { get; set; }
 
+        public override bool Equals(object? obj) {
+            return obj is MovieForRentalDTO dTO &&
+                   Id == dTO.Id &&
+                   Title == dTO.Title &&
+                   Genre == dTO.Genre &&
+                   ReleaseDate == dTO.ReleaseDate &&
+                   PriceForRenting == dTO.PriceForRenting &&
+                   LastRental == dTO.LastRental;
+        }
     }
 }
