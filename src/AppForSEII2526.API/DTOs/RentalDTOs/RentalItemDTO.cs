@@ -19,5 +19,14 @@
         public string? Description { get; set; }
 
         public string Genre { get; set; }
+
+        public override bool Equals(object? obj) {
+            return obj is RentalItemDTO dTO &&
+                   MovieID == dTO.MovieID &&
+                   Title == dTO.Title &&
+                   PriceForRenting == dTO.PriceForRenting &&
+                   Description == dTO.Description &&
+                   Genre == dTO.Genre;
+        }
     }
 }

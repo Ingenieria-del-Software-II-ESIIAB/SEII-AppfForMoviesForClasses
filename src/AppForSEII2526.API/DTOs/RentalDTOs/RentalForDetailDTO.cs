@@ -19,6 +19,22 @@ namespace AppForSEII2526.API.DTOs.RentalDTOs {
 
         public DateTime RentalDate { get; set; }
 
+        public override bool Equals(object? obj) {
+            return obj is RentalForDetailDTO dTO &&
+                   base.Equals(obj) &&
+                   DeliveryAddress == dTO.DeliveryAddress &&
+                   NameCustomer == dTO.NameCustomer &&
+                   SurnameCustomer == dTO.SurnameCustomer &&
 
+                   //check that both collections are Equal
+                   RentalItems.SequenceEqual(dTO.RentalItems) &&
+                   RentalDateFrom == dTO.RentalDateFrom &&
+                   RentalDateTo == dTO.RentalDateTo &&
+                   PaymentMethod == dTO.PaymentMethod &&
+                   UserNameCustomer == dTO.UserNameCustomer &&
+                   Id == dTO.Id &&
+                   CostofRental == dTO.CostofRental &&
+                   RentalDate == dTO.RentalDate;
+        }
     }
 }
