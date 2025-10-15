@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AppForSEII2526.API.DTOs.MovieDTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppForSEII2526.API.Controllers
@@ -31,7 +32,18 @@ namespace AppForSEII2526.API.Controllers
         //    decimal result = op1 / op2;
         //    return Ok(result);
         //}
-
-
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(typeof(IList<MovieForRentalDTO>), (int) HttpStatusCode.OK)]
+        public async Task<ActionResult> GetMoviesForRenting(string? movieTitle) {
+            IList<MovieForRentalDTO> moviesDTOS = await _context.Movies
+                .Include(movie=>movie.Genre)
+                .Where(movie=>movie.Title.Contains(movieTitle) 
+                        || (movieTitle == null))
+                .OrderBy(movie=>movie.Title)
+                .Select(movie=>new MovieForRentalDTO(movie.Id, movie.Title, movie.Genre.Name))
+                .ToListAsync();
+            return Ok(moviesDTOS);
+        }
     }
 }
