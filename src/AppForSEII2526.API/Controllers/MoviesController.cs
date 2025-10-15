@@ -38,10 +38,19 @@ namespace AppForSEII2526.API.Controllers
         public async Task<ActionResult> GetMoviesForRenting(string? movieTitle, string? genreName) {
             IList<MovieForRentalDTO> moviesDTOS = await _context.Movies
                 .Include(movie=>movie.Genre)
+
+                //to show when the movie was rented last time
+                .Include(movie => movie.RentalItems)
+                    .ThenInclude(rentailItem => rentailItem.Rental)
+                
                 .Where(movie=>(movie.Title.Contains(movieTitle)|| (movieTitle == null)
                     && (movie.Genre.Name.Contains(genreName)|| (genreName == null))))
                 .OrderBy(movie=>movie.Title)
-                .Select(movie=>new MovieForRentalDTO(movie.Id, movie.Title, movie.Genre.Name))
+
+                //to show when the movie was rented last time
+                .Select(movie=>new MovieForRentalDTO(movie.Id, movie.Title, movie.Genre.Name, 
+                            movie.ReleaseDate, movie.PriceForRenting, 
+                            movie.RentalItems.Max(ri=>ri.Rental.RentalDate)))
                 .ToListAsync();
             return Ok(moviesDTOS);
         }
