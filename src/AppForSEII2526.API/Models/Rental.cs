@@ -2,13 +2,13 @@
     public class Rental {
         public int Id { get; set; }
 
-        [StringLength(20,ErrorMessage ="Maximum 50, minimum 10",MinimumLength =10)]
+        [StringLength(50,ErrorMessage ="Maximum 50, minimum 10",MinimumLength =10)]
         public string DeliveryAddress { get; set; }
 
-        [StringLength(20,ErrorMessage = "Maximum 50, minimum 10",MinimumLength = 10)]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must have at least 3 characters")]
         public string NameCustomer { get; set; }
 
-        [StringLength(20,ErrorMessage = "Maximum 50, minimum 10",MinimumLength = 10)]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Surname must have at least 3 characters")]
         public string SurnameCustomer { get; set; }
 
         [Precision(10,2)]
