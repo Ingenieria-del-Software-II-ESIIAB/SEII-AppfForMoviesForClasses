@@ -1,6 +1,7 @@
 ﻿using AppForSEII2526.API.DTOs.MovieDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace AppForSEII2526.API.Controllers
 {
@@ -35,7 +36,19 @@ namespace AppForSEII2526.API.Controllers
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<MovieForRentalDTO>), (int) HttpStatusCode.OK)]
-        public async Task<ActionResult> GetMoviesForRenting(string? movieTitle, string? genreName) {
+        [ProducesResponseType(typeof(ModelError), (int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult> GetMoviesForRenting(string? movieTitle, string? genreName,
+            DateTime? fromDate, DateTime? toDate) {
+
+            if (fromDate != null && toDate != null && fromDate > toDate) {
+                //return BadRequest( Problem("fromDate must be earlier than toDate", 
+                //    $"fromDate ({fromDate}) toDate({toDate})", 400,"Bad Request", 
+                //    "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1"));
+                ModelState.AddModelError("fromDate&toDate", "fromDate must be earlier than toDate");
+                _logger.LogError($"{DateTime.Now} Error: fromDate must be earlier than toDate");
+                return BadRequest(new ValidationProblemDetails(ModelState));
+            }
+
             IList<MovieForRentalDTO> moviesDTOS = await _context.Movies
                 .Include(movie=>movie.Genre)
 
@@ -45,6 +58,9 @@ namespace AppForSEII2526.API.Controllers
                 
                 .Where(movie=>(movie.Title.Contains(movieTitle)|| (movieTitle == null)
                     && (movie.Genre.Name.Contains(genreName)|| (genreName == null))))
+
+
+
                 .OrderBy(movie=>movie.Title)
 
                 //to show when the movie was rented last time
