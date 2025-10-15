@@ -49,6 +49,10 @@ namespace AppForSEII2526.API.Controllers
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
 
+            //if not renting dates are provided a value by default is assigned
+            fromDate = fromDate == null ? DateTime.Today.AddDays(1) : fromDate;
+            toDate = toDate == null ? DateTime.Today.AddDays(2) : toDate;
+
             IList<MovieForRentalDTO> moviesDTOS = await _context.Movies
                 .Include(movie=>movie.Genre)
 
@@ -57,7 +61,13 @@ namespace AppForSEII2526.API.Controllers
                     .ThenInclude(rentailItem => rentailItem.Rental)
                 
                 .Where(movie=>(movie.Title.Contains(movieTitle)|| (movieTitle == null)
-                    && (movie.Genre.Name.Contains(genreName)|| (genreName == null))))
+                    && (movie.Genre.Name.Contains(genreName)|| (genreName == null)))
+
+                    //it is checkted that there are still movies available for the selected dates 
+                    && (movie.RentalItems.Where(ri => ri.Rental.RentalDateFrom <= toDate
+                                            && ri.Rental.RentalDateTo >= fromDate).Count() < movie.QuantityForRental)
+
+                    )
 
 
 
