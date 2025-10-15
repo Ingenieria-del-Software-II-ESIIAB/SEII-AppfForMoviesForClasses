@@ -35,11 +35,11 @@ namespace AppForSEII2526.API.Controllers
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<MovieForRentalDTO>), (int) HttpStatusCode.OK)]
-        public async Task<ActionResult> GetMoviesForRenting(string? movieTitle) {
+        public async Task<ActionResult> GetMoviesForRenting(string? movieTitle, string? genreName) {
             IList<MovieForRentalDTO> moviesDTOS = await _context.Movies
                 .Include(movie=>movie.Genre)
-                .Where(movie=>movie.Title.Contains(movieTitle) 
-                        || (movieTitle == null))
+                .Where(movie=>(movie.Title.Contains(movieTitle)|| (movieTitle == null)
+                    && (movie.Genre.Name.Contains(genreName)|| (genreName == null))))
                 .OrderBy(movie=>movie.Title)
                 .Select(movie=>new MovieForRentalDTO(movie.Id, movie.Title, movie.Genre.Name))
                 .ToListAsync();
