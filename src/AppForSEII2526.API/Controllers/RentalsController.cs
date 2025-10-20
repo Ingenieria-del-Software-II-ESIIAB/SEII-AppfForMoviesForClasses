@@ -56,5 +56,52 @@ namespace AppForSEII2526.API.Controllers {
 
             return Ok(rental);
         }
+
+
+        [HttpPost]
+        [Route("[action]")]
+
+        [ProducesResponseType(typeof(ValidationProblemDetails), (int)HttpStatusCode.BadRequest)]
+
+        [ProducesResponseType(typeof(RentalForDetailDTO), (int)HttpStatusCode.Created)]
+        public async Task<ActionResult> CreateRental(RentalForCreateDTO rentalForCreate) {
+            //any validation defined in PurchaseForCreate is checked before running the method so they don't have to be checked again
+            if (rentalForCreate.RentalDateFrom <= DateTime.Today)
+                ModelState.AddModelError("RentalDateFrom", "Error! Your rental date must start later than today");
+
+            if (rentalForCreate.RentalDateFrom >= rentalForCreate.RentalDateTo)
+                ModelState.AddModelError("RentalDateFrom&RentalDateTo", "Error! Your rental must end later than it starts");
+
+            if (rentalForCreate.RentalItems.Count == 0)
+                ModelState.AddModelError("RentalItems", "Error! You must include at least one movie to be rented");
+
+            //we must relate the Rental to the User
+            var user = await _context.Users.FirstOrDefaultAsync(au => au.UserName == rentalForCreate.UserNameCustomer);
+            if (user == null)
+                ModelState.AddModelError("RentalApplicationUser", "Error! UserName is not registered");
+
+
+            //we must provide rental with the info to be saved in the database
+            Rental rental = new Rental();
+
+
+
+
+            //if there is any problem because of the available quantity of movies or because the movie does not exist
+            if (ModelState.ErrorCount > 0) {
+                return BadRequest(new ValidationProblemDetails(ModelState));
+            }
+
+            var rentalDetail = new RentalForDetailDTO(rental.Id,rental.CostofRental,
+                rental.RentalDate,rental.DeliveryAddress,rental.NameCustomer,rental.SurnameCustomer,
+                rental.RentalDateFrom, rental.RentalDateTo,rental.PaymentMethod,
+
+                rental.Customer.UserName!,
+                new List<RentalItemDTO>());
+
+            return CreatedAtAction("GetRental", new { id = rental.Id }, rentalDetail);
+
+        }
     }
 }
+

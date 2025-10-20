@@ -1,5 +1,22 @@
 ﻿namespace AppForSEII2526.API.Models {
     public class Rental {
+        public Rental() {
+        }
+
+        public Rental(int id, string deliveryAddress, string nameCustomer, string surnameCustomer, ApplicationUser customer, decimal costofRental, DateTime rentalDate, DateTime rentalDateFrom, DateTime rentalDateTo, PaymentMethodType paymentMethod, IList<RentalItem> rentalItems) {
+            Id = id;
+            DeliveryAddress = deliveryAddress;
+            NameCustomer = nameCustomer;
+            SurnameCustomer = surnameCustomer;
+            Customer = customer;
+            CostofRental = costofRental;
+            RentalDate = rentalDate;
+            RentalDateFrom = rentalDateFrom;
+            RentalDateTo = rentalDateTo;
+            PaymentMethod = paymentMethod;
+            RentalItems = rentalItems;
+        }
+
         public int Id { get; set; }
 
         [StringLength(50,ErrorMessage ="Maximum 50, minimum 10",MinimumLength =10)]
