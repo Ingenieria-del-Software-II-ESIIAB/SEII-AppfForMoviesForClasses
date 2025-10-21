@@ -1,5 +1,12 @@
 ﻿namespace AppForSEII2526.API.DTOs.MovieDTOs {
     public class MovieForPurchaseDTO {
+        public MovieForPurchaseDTO(int id, string title, string genre, DateTime releaseDate, decimal priceForPurchase) {
+            Id = id;
+            Title = title;
+            Genre = genre;
+            ReleaseDate = releaseDate;
+            PriceForPurchase = priceForPurchase;
+        }
 
         public int Id { get; set; }
 
