@@ -26,8 +26,13 @@
         [Precision(10, 2)]
         public decimal PriceForPurchase { get; set; }
 
-
-
-
+        public override bool Equals(object? obj) {
+            return obj is MovieForPurchaseDTO dTO &&
+                   Id == dTO.Id &&
+                   Title == dTO.Title &&
+                   Genre == dTO.Genre &&
+                   ReleaseDate == dTO.ReleaseDate &&
+                   PriceForPurchase == dTO.PriceForPurchase;
+        }
     }
 }
