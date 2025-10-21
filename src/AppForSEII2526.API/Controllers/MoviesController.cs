@@ -80,5 +80,33 @@ namespace AppForSEII2526.API.Controllers
                 .ToListAsync();
             return Ok(moviesDTOS);
         }
+
+        // GET: api/Movies/GetMoviesForPurchase
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(typeof(IList<MovieForPurchaseDTO>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetMoviesForPurchase(string? movieTitle, string? movieGenre) {
+            IList<MovieForPurchaseDTO> selectMovies = await _context.Movies
+
+                //join table Movie and table Genre
+                .Include(m => m.Genre)
+
+
+                .Where(movie => movie.QuantityForPurchase > 0 // where clause
+                    && (movieTitle == null ||  //in case user has provided a title
+                                                movie.Title.Contains(movieTitle))
+                    && (movieGenre == null || //in case user has selected a genre
+                                                movie.Genre.Name.Equals(movieGenre)) 
+               
+                )
+
+                .OrderBy(m => m.Title)
+
+                .Select(m => new MovieForPurchaseDTO(m.Id, m.Title, m.Genre.Name, m.ReleaseDate, m.PriceForPurchase)
+                )
+                .ToListAsync();
+
+            return Ok(selectMovies);
+        }
     }
 }
