@@ -1,6 +1,19 @@
 ﻿namespace AppForSEII2526.API.Models {
     [Index(nameof(Title),IsUnique=true)]
     public class Movie {
+        public Movie() {
+        }
+
+        public Movie(string title, Genre genre, DateTime releaseDate, decimal priceForPurchase, int quantityForPurchase, decimal priceForRenting, int quantityForRental) {
+            Title = title;
+            PriceForPurchase = priceForPurchase;
+            QuantityForPurchase = quantityForPurchase;
+            Genre = genre;
+            ReleaseDate = releaseDate;
+            PriceForRenting = priceForRenting;
+            QuantityForRental = quantityForRental;
+
+        }
 
         public int Id { get; set; }
 
