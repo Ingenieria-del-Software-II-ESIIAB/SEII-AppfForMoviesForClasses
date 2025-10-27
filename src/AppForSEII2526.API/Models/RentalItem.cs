@@ -3,6 +3,16 @@
     [PrimaryKey(nameof(RentalId), nameof(MovieId))]
     public class RentalItem
     {
+
+        public RentalItem() {
+        }
+
+        public RentalItem(int movieId, Rental rental, decimal priceForRenting, string? description) {
+            MovieId = movieId;
+            Rental = rental;
+            Price = priceForRenting;
+            Description = description;
+        }
         public int RentalId { get; set; }
 
         [ForeignKey(nameof(RentalId))]
