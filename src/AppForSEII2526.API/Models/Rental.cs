@@ -3,14 +3,13 @@
         public Rental() {
         }
 
-        public Rental(int id, string deliveryAddress, string nameCustomer, string surnameCustomer, ApplicationUser customer, decimal costofRental, DateTime rentalDate, DateTime rentalDateFrom, DateTime rentalDateTo, PaymentMethodType paymentMethod, IList<RentalItem> rentalItems) {
-            Id = id;
+        public Rental(string deliveryAddress, string nameCustomer, string surnameCustomer, ApplicationUser customer, DateTime rentalDateFrom, DateTime rentalDateTo, PaymentMethodType paymentMethod, IList<RentalItem> rentalItems) {
+
             DeliveryAddress = deliveryAddress;
             NameCustomer = nameCustomer;
             SurnameCustomer = surnameCustomer;
             Customer = customer;
-            CostofRental = costofRental;
-            RentalDate = rentalDate;
+            RentalDate = DateTime.Now;
             RentalDateFrom = rentalDateFrom;
             RentalDateTo = rentalDateTo;
             PaymentMethod = paymentMethod;
