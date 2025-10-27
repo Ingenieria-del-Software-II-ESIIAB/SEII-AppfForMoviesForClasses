@@ -62,7 +62,7 @@ namespace AppForSEII2526.API.Controllers {
         [Route("[action]")]
 
         [ProducesResponseType(typeof(ValidationProblemDetails), (int)HttpStatusCode.BadRequest)]
-
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)]
         [ProducesResponseType(typeof(RentalForDetailDTO), (int)HttpStatusCode.Created)]
         public async Task<ActionResult> CreateRental(RentalForCreateDTO rentalForCreate) {
             //any validation defined in PurchaseForCreate is checked before running the method so they don't have to be checked again
@@ -112,9 +112,7 @@ namespace AppForSEII2526.API.Controllers {
                 rentalForCreate.PaymentMethod, new List<RentalItem>());
 
 
-            rental.CostofRental = 0;
-            var numDays = (rental.RentalDateTo - rental.RentalDateFrom).TotalDays;
-
+                   
 
             foreach (var item in rentalForCreate.RentalItems) {
                 var movie = movies.FirstOrDefault(m => m.Title == item.Title);
@@ -128,9 +126,11 @@ namespace AppForSEII2526.API.Controllers {
                     item.PriceForRenting = movie.PriceForRenting;
                 }
             }
-         //   rental.CostofRental = rental.RentalItems.Sum(ri =>  ri.Price * numDays);
 
-            //if there is any problem because of the available quantity of movies or because the movie does not exist
+            decimal numDays = (decimal)(rental.RentalDateTo - rental.RentalDateFrom).TotalDays;
+            rental.CostofRental = rental.RentalItems.Sum(ri => ri.Price * numDays);
+
+            //if there is any problem because of the available quantity of movies or because any movie does not exist
             if (ModelState.ErrorCount > 0) {
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
@@ -142,8 +142,8 @@ namespace AppForSEII2526.API.Controllers {
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex) {
-                _logger.LogError(ex.Message);
-                ModelState.AddModelError("Rental", $"Error! There was an error while saving your rental, plese, try again later");
+                _logger.LogError(DateTime.Now+ ":"+  ex.Message);
+                //ModelState.AddModelError("Rental", $"Error! There was an error while saving your rental, please, try again later");
                 return Conflict("Error" + ex.Message);
 
             }
