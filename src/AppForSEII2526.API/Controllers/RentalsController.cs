@@ -152,8 +152,7 @@ namespace AppForSEII2526.API.Controllers {
                 rental.RentalDate,rental.DeliveryAddress,rental.NameCustomer,rental.SurnameCustomer,
                 rental.RentalDateFrom, rental.RentalDateTo,rental.PaymentMethod,
 
-                rental.Customer.UserName!,
-                new List<RentalItemDTO>());
+                rental.Customer.UserName!,rentalForCreate.RentalItems);
 
             return CreatedAtAction("GetRental", new { id = rental.Id }, rentalDetail);
 
