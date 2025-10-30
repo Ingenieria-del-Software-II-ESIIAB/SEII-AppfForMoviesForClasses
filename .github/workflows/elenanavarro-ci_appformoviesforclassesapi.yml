@@ -6,7 +6,10 @@ name: Build and deploy ASP.Net Core app to Azure Web App - appformoviesforclasse
 on:
   push:
     branches:
-      - ElenaNavarro-CI
+      - development
+    paths:
+      - 'src/AppForMovies.API**'
+
   workflow_dispatch:
 
 jobs:
@@ -79,4 +82,5 @@ jobs:
           package: .
 
           
+
 
