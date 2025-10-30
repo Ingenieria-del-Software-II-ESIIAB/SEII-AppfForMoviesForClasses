@@ -31,10 +31,13 @@ jobs:
         run: |  
           dotnet restore ${{ env.API }} 
           dotnet restore ${{ env.UT }} 
+
+
       - name: Build with dotnet
         run: |
           dotnet build ${{ env.API }}  --configuration Release --no-restore
           dotnet build ${{ env.UT }}  --configuration Release --no-restore
+
       - name: Run unit tests with report
         run: dotnet test ${{ env.UT }} --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
 
@@ -76,3 +79,4 @@ jobs:
           package: .
 
           
+
