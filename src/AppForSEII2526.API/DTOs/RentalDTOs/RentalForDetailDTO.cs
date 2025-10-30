@@ -65,7 +65,9 @@ namespace AppForSEII2526.API.DTOs.RentalDTOs {
                    PaymentMethod == dTO.PaymentMethod &&
                    UserNameCustomer == dTO.UserNameCustomer &&
                    CostofRental == dTO.CostofRental &&
-                   RentalDate == dTO.RentalDate;
+
+                   //we checked that the rentaldate is aproximately the same
+                   (RentalDate - dTO.RentalDate).TotalMinutes <2;
         }
     }
 }
