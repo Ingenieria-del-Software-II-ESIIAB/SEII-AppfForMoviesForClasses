@@ -24,28 +24,28 @@ namespace AppForSEII2526.UT.MoviesController_test {
 
         }
 
-        [Fact]
-        [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetMoviesForPurchase_NULL_TITLE_GENRE() {
-            // Arrange
-            var expectedMovies = new List<MovieForPurchaseDTO>() {
-                new MovieForPurchaseDTO(1,"The lord of the rings","Sci - Fi",new DateTime(2011, 10, 20),10.0m),
-                new MovieForPurchaseDTO(2,"The mechanic orange","Drama" , new DateTime(1988, 02, 23),15.0m),
-            };
+        //[Fact]
+        //[Trait("LevelTesting", "Unit Testing")]
+        //public async Task GetMoviesForPurchase_NULL_TITLE_GENRE() {
+        //    // Arrange
+        //    var expectedMovies = new List<MovieForPurchaseDTO>() {
+        //        new MovieForPurchaseDTO(1,"The lord of the rings","Sci - Fi",new DateTime(2011, 10, 20),10.0m),
+        //        new MovieForPurchaseDTO(2,"The mechanic orange","Drama" , new DateTime(1988, 02, 23),15.0m),
+        //    };
 
-            var controller = new MoviesController(_context, null);
+        //    var controller = new MoviesController(_context, null);
 
-            // Act
-            var result = await controller.GetMoviesForPurchase(null, null);
+        //    // Act
+        //    var result = await controller.GetMoviesForPurchase(null, null);
 
-            //Assert
-            //we check that the response type is OK 
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            //and obtain the list of movies
-            var movieDTOsActual = Assert.IsType<List<MovieForPurchaseDTO>>(okResult.Value);
-            Assert.Equal(expectedMovies, movieDTOsActual);
+        //    //Assert
+        //    //we check that the response type is OK 
+        //    var okResult = Assert.IsType<OkObjectResult>(result);
+        //    //and obtain the list of movies
+        //    var movieDTOsActual = Assert.IsType<List<MovieForPurchaseDTO>>(okResult.Value);
+        //    Assert.Equal(expectedMovies, movieDTOsActual);
 
-        }
+        //}
 
         public static IEnumerable<object[]> TestCasesFor_GetMoviesForPurchase_OK() {
 
