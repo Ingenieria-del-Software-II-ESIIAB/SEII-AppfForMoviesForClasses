@@ -56,25 +56,30 @@ jobs:
   deploy:
     runs-on: windows-latest
     needs: build
-    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
       
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_11FAA6DD46364A2EA9655B029809E898 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6B25EAF5BED64A4287AA9230E56C512A }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_91F24224D2FC41DB81E9D916D296BF36 }}
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-
-          //this will depend on the name provided while creating the web-app
-          app-name: 'appformovies-api'
+          app-name: 'appformoviesforclassesapi'
           slot-name: 'Production'
           package: .
-
-          //thiss will depend on the user deploying the app
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D431DCDCED3A4E958AA16992E05EDA40 }}
 
 
 
