@@ -1,0 +1,83 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy Appformovies.API
+
+on:
+  push:
+    branches:
+      - development
+    paths:
+      - 'src/AppForMovies.API**'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: read #This is required for actions/checkout
+    env:
+      API: ./src/AppForSEII2526.API/AppForSEII2526.API.csproj
+      UT:  ./test/AppForSEII2526.UT/AppForSEII2526.UT.csproj
+
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore dependencies        
+        run: |  
+          dotnet restore ${{ env.API }} 
+          dotnet restore ${{ env.UT }} 
+
+
+      - name: Build with dotnet
+        run: |
+          dotnet build ${{ env.API }}  --configuration Release --no-restore
+          dotnet build ${{ env.UT }}  --configuration Release --no-restore
+
+      - name: Run unit tests with report
+        run: dotnet test ${{ env.UT }} --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
+
+      - name: dotnet publish
+        run: dotnet publish ${{ env.API }}  -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+      
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+
+          //this will depend on the name provided while creating the web-app
+          app-name: 'appformovies-api'
+          slot-name: 'Production'
+          package: .
+
+          //thiss will depend on the user deploying the app
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D431DCDCED3A4E958AA16992E05EDA40 }}
+
+
+
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
