@@ -1,4 +1,4 @@
-﻿namespace AppForMovies.UT {
+﻿namespace AppForSEII2526.UT {
     public class AppForMovies4SqliteUT {
         protected readonly DbConnection _connection;
         protected readonly ApplicationDbContext _context;

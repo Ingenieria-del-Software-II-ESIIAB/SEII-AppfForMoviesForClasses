@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppForMovies.UT.RentalsController_test {
+namespace AppForSEII2526.UT.RentalsController_test {
     public class GetRentals_test : AppForMovies4SqliteUT {
         public GetRentals_test() {
 
