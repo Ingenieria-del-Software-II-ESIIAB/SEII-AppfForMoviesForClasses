@@ -12,4 +12,3 @@ global using AppForSEII2526.API.Data;
 global using AppForSEII2526.API.Models;
 global using Microsoft.Extensions.Logging;
 global using Moq;
-global using AppForSEII2526.API.Models;
