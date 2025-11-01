@@ -1,14 +1,30 @@
 ﻿namespace AppForSEII2526.API.Models {
     public class Rental {
+        public Rental() {
+        }
+
+        public Rental(string deliveryAddress, string nameCustomer, string surnameCustomer, ApplicationUser customer, DateTime rentalDateFrom, DateTime rentalDateTo, PaymentMethodType paymentMethod, IList<RentalItem> rentalItems) {
+
+            DeliveryAddress = deliveryAddress;
+            NameCustomer = nameCustomer;
+            SurnameCustomer = surnameCustomer;
+            Customer = customer;
+            RentalDate = DateTime.Now;
+            RentalDateFrom = rentalDateFrom;
+            RentalDateTo = rentalDateTo;
+            PaymentMethod = paymentMethod;
+            RentalItems = rentalItems;
+        }
+
         public int Id { get; set; }
 
-        [StringLength(20,ErrorMessage ="Maximum 50, minimum 10",MinimumLength =10)]
+        [StringLength(50,ErrorMessage ="Maximum 50, minimum 10",MinimumLength =10)]
         public string DeliveryAddress { get; set; }
 
-        [StringLength(20,ErrorMessage = "Maximum 50, minimum 10",MinimumLength = 10)]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must have at least 3 characters")]
         public string NameCustomer { get; set; }
 
-        [StringLength(20,ErrorMessage = "Maximum 50, minimum 10",MinimumLength = 10)]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Surname must have at least 3 characters")]
         public string SurnameCustomer { get; set; }
 
         [Precision(10,2)]

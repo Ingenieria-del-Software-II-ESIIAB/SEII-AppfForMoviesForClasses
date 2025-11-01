@@ -192,9 +192,9 @@ namespace AppForSEII2526.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DeliveryAddress = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    NameCustomer = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    SurnameCustomer = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    DeliveryAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameCustomer = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SurnameCustomer = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CostofRental = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     RentalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RentalDateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
