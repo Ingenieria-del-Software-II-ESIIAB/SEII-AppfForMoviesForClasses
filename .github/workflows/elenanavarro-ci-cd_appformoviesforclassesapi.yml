@@ -1,12 +1,14 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - appformoviesforclassesapi
+name: CD appformoviesforclassesapi
 
 on:
   push:
     branches:
       - ElenaNavarro-CI-CD
+
+
   workflow_dispatch:
 
 jobs:
@@ -14,20 +16,35 @@ jobs:
     runs-on: windows-latest
     permissions:
       contents: read #This is required for actions/checkout
+    env:
+      API: ./src/AppForSEII2526.API/AppForSEII2526.API.csproj
+      UT:  ./test/AppForSEII2526.UT/AppForSEII2526.UT.csproj
+
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository code branch development
+        uses: actions/checkout@v4
+        with:
+            ref: 'development'
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
+      - name: Restore dependencies        
+        run: |  
+          dotnet restore ${{ env.API }} 
+          dotnet restore ${{ env.UT }} 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: |
+          dotnet build ${{ env.API }}  --configuration Release --no-restore
+          dotnet build ${{ env.UT }}  --configuration Release --no-restore
+      - name: Run unit tests with report
+        run: dotnet test ${{ env.UT }} --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish ${{ env.API }}  -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -62,4 +79,5 @@ jobs:
           app-name: 'appformoviesforclassesapi'
           slot-name: 'Production'
           package: .
+
           
