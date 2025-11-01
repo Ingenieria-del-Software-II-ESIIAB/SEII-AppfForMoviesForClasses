@@ -6,7 +6,10 @@ name: CD appformoviesforclassesapi
 on:
   push:
     branches:
-      - ElenaNavarro-CI-CD
+       - ElenaNavarro-CI-CD
+#      - development
+#    paths:
+#      - 'src/AppForMovies.API**'
 
 
   workflow_dispatch:
@@ -81,3 +84,4 @@ jobs:
           package: .
 
           
+
