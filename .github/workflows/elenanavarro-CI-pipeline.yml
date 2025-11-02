@@ -5,9 +5,15 @@ name: Continous Integration
 
 on:
   push:
-    branches: [ "development" ]
+    branches: 
+       - ElenaNavarro-CI-CD
+#      - development
+# for considering only those changes affecting to a specific folder
+#    paths:
+#      - 'src/AppForMovies.API**'
   pull_request:
-    branches: [ "development" ]
+    branches: 
+       - development
 
 jobs:
   build:
