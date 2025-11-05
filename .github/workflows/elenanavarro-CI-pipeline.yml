@@ -1,14 +1,21 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Continous Integration
+name: Continous Integration fired when a pull request is done to development
 
 on:
-  push:
-    branches: [ "development" ]
+#  push:
+#    branches: 
+#      - development
+# for considering only those changes affecting to a specific folder
+#    paths:
+#      - 'src/AppForMovies.API**'
   pull_request:
-    branches: [ "development" ]
-
+    branches: 
+       - development
+       
+  workflow_dispatch:
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,13 +29,11 @@ jobs:
     steps:
       - name: Check out repository code just branch development
         uses: actions/checkout@v4
-        with:
-            ref: 'development'
+
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.x'
+
           
       - name: Restore dependencies        
         run: |  
