@@ -5,9 +5,9 @@ name: Continous Integration
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "CHECKING-CI" ]
   pull_request:
-    branches: [ "development" ]
+    branches: [ "CHECKING-CI" ]
 
 jobs:
   build:
