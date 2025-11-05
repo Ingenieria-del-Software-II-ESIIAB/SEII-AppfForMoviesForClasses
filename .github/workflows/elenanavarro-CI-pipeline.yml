@@ -22,8 +22,7 @@ jobs:
     steps:
       - name: Check out repository code just branch development
         uses: actions/checkout@v4
-        with:
-            ref: 'development'
+
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
