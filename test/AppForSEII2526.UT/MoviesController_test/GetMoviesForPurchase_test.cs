@@ -69,7 +69,7 @@ namespace AppForSEII2526.UT.MoviesController_test {
             {             //filters to apply - expected movies
                                           //by default datefrom=today +1, dateto=today+2, thus movieDTOs[0] cannot be returned
                 new object[] { null, null, movieDTOsTC1,  },
-                new object[] { "lord", null, movieDTOsTC2, },
+                new object[] { "XXXX", null, movieDTOsTC2, },
                 new object[] { null, "Drama", movieDTOsTC3, },
 
             };
