@@ -4,15 +4,15 @@
 name: Continous Integration fired when a pull request is done to development
 
 on:
-  push:
-    branches: 
-      - ElenaNavarro-CI-CD
+#  push:
+#    branches: 
+#      - ElenaNavarro-CI-CD
 # for considering only those changes affecting to a specific folder
 #    paths:
 #      - 'src/AppForMovies.API**'
-#  pull_request:
-#    branches: 
-#       - development
+  pull_request:
+    branches: 
+       - development
        
   workflow_dispatch:
   
