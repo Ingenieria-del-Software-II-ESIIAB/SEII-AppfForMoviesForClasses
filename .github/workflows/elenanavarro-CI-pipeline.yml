@@ -1,18 +1,18 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Continous Integration fired when a pull request is done to development
+name: Continous Integration fired when a push is done to ElenaNavarro-CI-CD
 
 on:
-#  push:
-#    branches: 
-#      - ElenaNavarro-CI-CD
+  push:
+    branches: 
+      - ElenaNavarro-CI-CD
 # for considering only those changes affecting to a specific folder
 #    paths:
 #      - 'src/AppForMovies.API**'
-  pull_request:
-    branches: 
-       - development
+#  pull_request:
+#    branches: 
+#       - development
        
   workflow_dispatch:
   
