@@ -7,7 +7,7 @@ on:
   push:
     branches:
        - ElenaNavarro-CI-CD
-#      - development
+       - development
 #    paths:
 #      - 'src/AppForMovies.API**'
 
@@ -84,4 +84,5 @@ jobs:
           package: .
 
           
+
 
