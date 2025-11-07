@@ -36,7 +36,7 @@ namespace AppForSEII2526.API.Controllers
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<MovieForRentalDTO>), (int) HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(ModelError), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), (int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult> GetMoviesForRenting(string? movieTitle, string? genreName,
             DateTime? fromDate, DateTime? toDate) {
 
