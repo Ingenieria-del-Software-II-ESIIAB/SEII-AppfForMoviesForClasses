@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,8 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="OpenAPIs\swagger.json" Namespace="AppForSEII2526.Web.API" ClassName="AppForSEII2526APIClient">
-      <SourceUri>https://localhost:7067/swagger/v1/swagger.json</SourceUri>
+    <None Include="OpenAPIs\swagger.json" ClassName="AppForSEII2526APIClient" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <OpenApiReference Include="OpenAPIs\swagger1.json" Namespace="AppForSEII2526.Web.API" ClassName="AppForMoviesAPIClient">
+      <SourceUri>https://appformoviesforclassesapi-c0d4fbhnauexgubv.spaincentral-01.azurewebsites.net/swagger/v1/swagger.json</SourceUri>
     </OpenApiReference>
   </ItemGroup>
 
@@ -29,6 +33,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NSwag.AspNetCore" Version="14.6.2" />
     <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
   </ItemGroup>
 
