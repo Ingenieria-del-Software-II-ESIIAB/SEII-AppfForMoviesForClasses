@@ -1,0 +1,59 @@
+﻿{
+  "runtime": "Net80",
+  "defaultVariables": null,
+  "documentGenerator": {
+    "fromDocument": {
+      "url": "[la dirección del swagger.json de tu endpoint]",
+      "output": null,
+      "newLineBehavior": "Auto"
+    }
+  },
+  "codeGenerators": {
+    "openApiToCSharpClient": {
+      "className": "MyApiClient",
+      "namespace": "MyProject.ApiClients",
+      "generateClientClasses": true,
+      "generateClientInterfaces": true,
+      "injectHttpClient": true,
+      "disposeHttpClient": false,
+      "useHttpClientCreationMethod": false,
+      "httpClientType": "System.Net.Http.HttpClient",
+      "useBaseUrl": true,
+      "generateBaseUrlProperty": true,
+      "generateDtoTypes": true,
+      "generateOptionalParameters": false,
+      "generateDefaultValues": false,
+      "generateDataAnnotations": true,
+      "excludedTypeNames": [],
+      "generateExceptionClasses": true,
+      "exceptionClass": "ApiException",
+      "wrapDtoExceptions": false,
+      "generateResponseClasses": true,
+      "responseClass": "SwaggerResponse",
+      "generateResponseHeaders": true,
+      "generateUpdateJsonSerializerSettingsMethod": true,
+      "serializerSettingsTransformationMethod": null,
+      "clientBaseClass": null,
+      "configurationClass": null,
+      "useRequestAndResponseSerializationSettings": false,
+      "queryNullValue": "",
+      "classNamePrefix": "",
+      "classNameSuffix": "",
+      "generateModelValidationAttributes": false,
+      "generatePartialClasses": true,
+      "generateAbstractProperties": false,
+      "generateContractsOutput": false,
+      "contractsNamespace": "MyProject.Contracts",
+      "output": "MyApiClient.cs",
+      "flattenInheritanceHierarchy": true,
+      "generateImmutableArrayProperties": false,
+      "generateImmutableDictionaryProperties": false,
+      "generateJsonMethods": true,
+      "inlineNamedArrays": false,
+      "inlineNamedDictionaries": false,
+      "inlineNamedTuples": false,
+      "generateOptionalPropertiesAsNullable": true
+    }
+  }
+}
+}
