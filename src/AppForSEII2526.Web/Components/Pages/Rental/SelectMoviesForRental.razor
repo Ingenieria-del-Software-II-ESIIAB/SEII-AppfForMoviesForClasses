@@ -4,6 +4,7 @@
 @inject AppForMoviesAPIClient apiclient
 @inject ILogger<SelectMoviesForRental> logger
 @inject RentalStateContainer rentalState
+@inject NavigationManager navigation
 
 <h3>Select Movies For Rental</h3>
 <div class="container-fluid">
@@ -77,8 +78,18 @@
                 }
             </div>
         </div>
-        <div class="col-2">
-            <p>here i will show the renting cart</p>
+        <div class="col-2" hidden="@hideRentingCart">
+            <div class="row">
+                <h3>Shopping Cart</h3>
+            </div>
+            @foreach (RentalItemDTO item in rental.RentalItems) {
+                <div class="row">
+                    <button type="button" class="btn btn-light" id="removeMovie_@item.Title" @onclick="@(() => RemoveRentalItem(item))">x @item.Title - @item.PriceForRenting€</button>
+                </div>
+            }
+            <div class="row">
+                <button type="button" class="btn btn-primary" id="purchaseMovieButton" @onclick=@RentMovies>Rent movies</button>
+            </div>
         </div>
         
     </div>
@@ -86,6 +97,7 @@
 </div>
 
 @code {
+    private bool hideRentingCart { get { return rental.RentalItems.Count == 0; } }
     private ICollection<MovieForRentalDTO> movies;
     private bool hideErrors { get { return errors.Length == 0; } }
     private string errors = "";
@@ -174,6 +186,10 @@
         SearchMovies();
 
         return base.OnInitializedAsync();
+    }
+
+    private void RentMovies() {
+        navigation.NavigateTo("/rentals/createrental");
     }
 
 }
