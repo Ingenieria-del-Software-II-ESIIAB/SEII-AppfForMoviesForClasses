@@ -1,16 +1,31 @@
 ﻿@page "/rental/selectmoviesforrental"
+
+@using AppForSEII2526.Web.API
+@inject AppForMoviesAPIClient apiclient
+@inject ILogger<SelectMoviesForRental> logger
+
 <h3>Select Movies For Rental</h3>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" hidden="@hideErrors">
         <p>here i will show the errors</p>
     </div>
     <div class="row">
         <div class="col-8">
             <div class="row">
                 <p>here i will show the filters</p>
+                <div class="col">
+                    <button type="button" class="btn btn-primary" @onclick=@SearchMovies id="searchMovies">Search movies</button>
+                </div>
             </div>
             <div class="row">
-                <p>here i will show the list of movies</p>
+                @if (movies == null) {
+                    <p>Loading movies....</p>
+                }
+                else
+                {
+                    <p>number of movies @movies.Count</p>
+                
+                }
             </div>
         </div>
         <div class="col-2">
@@ -22,5 +37,22 @@
 </div>
 
 @code {
+    private ICollection<MovieForRentalDTO> movies;
+    private bool hideErrors { get { return errors.Length == 0; } }
+    private string errors = "";
+    private string movieTitle { get; set; }
+    private string movieGenre { get; set; }
+
+    public async void SearchMovies() {
+        try {
+            movies = await apiclient.GetMoviesForRentingAsync(movieTitle, movieGenre,null,null);
+
+        }
+        catch (ApiException ex) {
+            logger.LogError($"{DateTime.Now} Error: {ex}");
+            errors = "Error while connecting to the system";
+        }
+        StateHasChanged();
+    }
 
 }
