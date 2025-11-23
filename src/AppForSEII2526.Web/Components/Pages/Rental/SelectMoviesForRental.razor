@@ -12,10 +12,33 @@
     <div class="row">
         <div class="col-8">
             <div class="row">
-                <p>here i will show the filters</p>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Title</span>
+                        <input type="text" id="inputTitle" @bind=movieTitle class="form-control" placeholder="Title" aria-label="Title" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">Genre</span>
+                        <input type="text" id="inputGenre" @bind=movieGenre class="form-control" placeholder="Genre" aria-label="Genre" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">From</span>
+                        <InputDate @bind-Value="@From" id="fromDate" />
+                    </div>
+                </div>
+                <div class="col">
+                    <span class="input-group-text">To</span>
+                    <InputDate id="toDate" @bind-Value="@To" />
+
+                </div>
                 <div class="col">
                     <button type="button" class="btn btn-primary" @onclick=@SearchMovies id="searchMovies">Search movies</button>
                 </div>
+
             </div>
             <div class="row">
                 @if (movies == null) {
@@ -42,10 +65,33 @@
     private string errors = "";
     private string movieTitle { get; set; }
     private string movieGenre { get; set; }
+    private DateTime _from;
+    private DateTime From {
+        get { return _from; }
+        set {
+            if (_from != value) {
+                //the rentingcart is cleared to ensure that only movies available for the selected period are selected
+                _from = value;
+
+            }
+        }
+    }
+
+    private DateTime _to;
+    private DateTime To {
+        get { return _to; }
+        set {
+            if (_to != value) {
+                //the rentingcart is cleared to ensure that only movies available for the selected period are selected
+                _to = value;
+
+            }
+        }
+    }
 
     public async void SearchMovies() {
         try {
-            movies = await apiclient.GetMoviesForRentingAsync(movieTitle, movieGenre,null,null);
+            movies = await apiclient.GetMoviesForRentingAsync(movieTitle, movieGenre,_from,_to);
 
         }
         catch (ApiException ex) {
@@ -53,6 +99,25 @@
             errors = "Error while connecting to the system";
         }
         StateHasChanged();
+    }
+
+    protected override Task OnInitializedAsync() {
+        //the type of RentalDateFrom is DateTimeOffset, it is required a conversion
+        //https://learn.microsoft.com/es-es/dotnet/standard/datetime/converting-between-datetime-and-offset
+        _from = (_from == new DateTime(1, 1, 1)) ?
+            DateTime.SpecifyKind(DateTime.Today.AddDays(1), DateTimeKind.Utc)
+            : _from;
+
+
+        //the type of RentalDateFrom is DateTimeOffset, it is required a conversion
+        //https://learn.microsoft.com/es-es/dotnet/standard/datetime/converting-between-datetime-and-offset
+        _to = (_to == new DateTime(1, 1, 1)) ?
+            DateTime.SpecifyKind(DateTime.Today.AddDays(2), DateTimeKind.Utc)
+            : _to;
+
+        SearchMovies();
+
+        return base.OnInitializedAsync();
     }
 
 }
