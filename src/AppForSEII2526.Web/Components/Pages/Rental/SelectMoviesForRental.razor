@@ -7,8 +7,8 @@
 
 <h3>Select Movies For Rental</h3>
 <div class="container-fluid">
-    <div class="row" hidden="@hideErrors">
-        <p>here i will show the errors</p>
+    <div class="row alert alert-danger" role="alert" hidden="@hideErrors">
+        <p id="ErrorsShown">Errors: @errors</p>
     </div>
     <div class="row">
         <div class="col-8">
@@ -98,6 +98,8 @@
             if (_from != value) {
                 //the rentingcart is cleared to ensure that only movies available for the selected period are selected
                 _from = value;
+                rental.RentalDateFrom = DateTime.SpecifyKind(_from, DateTimeKind.Utc);
+                rentalState.ClearRentingCart();
 
             }
         }
@@ -110,6 +112,8 @@
             if (_to != value) {
                 //the rentingcart is cleared to ensure that only movies available for the selected period are selected
                 _to = value;
+                rental.RentalDateTo = DateTime.SpecifyKind(_to, DateTimeKind.Utc);
+                rentalState.ClearRentingCart();
 
             }
         }
@@ -128,8 +132,21 @@
     }
 
     public async void SearchMovies() {
+
+
+        if (rental.RentalDateFrom > rental.RentalDateTo) {
+            errors="Your rental must end after than its starts";
+            return;
+        }
+
+        if (rental.RentalDateFrom < DateTime.Today || rental.RentalDateTo < DateTime.Today) {
+            errors="Your rental period must be later";
+            return;
+        }
+
         try {
             movies = await apiclient.GetMoviesForRentingAsync(movieTitle, movieGenre,_from,_to);
+            errors = "";
 
         }
         catch (ApiException ex) {
