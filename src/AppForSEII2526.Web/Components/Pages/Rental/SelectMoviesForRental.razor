@@ -47,7 +47,32 @@
                 }
                 else
                 {
-                    <p>number of movies @movies.Count</p>
+                    <div class="mh-100 table-responsive">
+                        <table class="table table-condensed table-hover" id="TableOfMovies">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Genre</th>
+                                    <th>Release Date</th>
+                                    <th>Price For Renting</th>
+                                    <th>Rent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var movie in movies) {
+                                    <tr id="MovieData_@movie.Title">
+                                        <td>@movie.Title</td>
+                                        <td>@movie.Genre</td>
+                                        <td>@movie.ReleaseDate.DateTime.ToShortDateString()</td>
+                                        <td>@movie.PriceForRenting</td>
+                                        <td>
+                                            <button class="btn btn-outline-secondary" id="movieToRent_@movie.Title" @onclick="@(() => AddMovie(movie))">Add</button>
+                                        </td>
+                                    </tr>
+                                }
+                        </tbody>
+                    </table>
+                    </div>
                 
                 }
             </div>
