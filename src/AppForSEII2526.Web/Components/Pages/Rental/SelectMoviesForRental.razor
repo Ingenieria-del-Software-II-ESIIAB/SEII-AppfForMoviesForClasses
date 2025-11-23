@@ -3,6 +3,7 @@
 @using AppForSEII2526.Web.API
 @inject AppForMoviesAPIClient apiclient
 @inject ILogger<SelectMoviesForRental> logger
+@inject RentalStateContainer rentalState
 
 <h3>Select Movies For Rental</h3>
 <div class="container-fluid">
@@ -88,6 +89,18 @@
             }
         }
     }
+    private RentalForCreateDTO rental => rentalState.Rental;
+
+    private bool hiddenRentingCart = true;
+
+    private void AddMovie(MovieForRentalDTO movie) {
+        rentalState.AddMovieToRental(movie);
+    }
+
+    private void RemoveRentalItem(RentalItemDTO item) {
+        rentalState.RemoveRentalItemToRent(item);
+        if (rental.RentalItems.Count == 0) hiddenRentingCart = true;
+    }
 
     public async void SearchMovies() {
         try {
@@ -107,13 +120,14 @@
         _from = (_from == new DateTime(1, 1, 1)) ?
             DateTime.SpecifyKind(DateTime.Today.AddDays(1), DateTimeKind.Utc)
             : _from;
-
+        rental.RentalDateFrom = _from;
 
         //the type of RentalDateFrom is DateTimeOffset, it is required a conversion
         //https://learn.microsoft.com/es-es/dotnet/standard/datetime/converting-between-datetime-and-offset
         _to = (_to == new DateTime(1, 1, 1)) ?
             DateTime.SpecifyKind(DateTime.Today.AddDays(2), DateTimeKind.Utc)
             : _to;
+        rental.RentalDateTo = _to;
 
         SearchMovies();
 
