@@ -37,6 +37,36 @@
         </tr>
     </table>
 
+       <h4>Rented Movies</h4>
+
+    <table class="table" id="RentedMovies">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Price for Renting</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (RentalItemDTO item in rental.RentalItems)
+            {
+                <tr id="RentalItem_@item.Title">
+                    <td>@item.Title</td>
+                    <td>@item.Genre</td>
+                    <td>@item.PriceForRenting €</td>
+                    <td>@item.Description</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+              @*colspan is used to state that TWO columns are collapsed*@
+            <th scope="row" colspan="2" class="text-end">Total Price</th>
+            <td id="TotalPrice">@rental.CostofRental €</td>
+        </tfoot>
+
+    </table>
+
 }
 
 @code {
