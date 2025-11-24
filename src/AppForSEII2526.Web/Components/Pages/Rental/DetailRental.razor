@@ -14,7 +14,28 @@
     <p>@error</p>
 }else
 {
-    
+        <table class="table table-borderless table-sm">
+        <tr>
+            <th>Name and Surname</th>
+            <td id="NameSurname">@rental.NameCustomer @rental.SurnameCustomer</td>
+        </tr>
+        <tr>
+            <th>Delivery Address</th>
+            <td id="DeliveryAddress">@rental.DeliveryAddress</td>
+        </tr>
+        <tr>
+            <th>Payment Method</th>
+            <td id="PaymentMethod">@rental.PaymentMethod</td>
+        </tr>
+        <tr>
+            <th>Rental Date</th>
+            <td id="RentalDate">@rental.RentalDate.ToString("dd/MM/yyyy hh:mm:ss")</td>
+        </tr>
+        <tr>
+            <th>Rental period</th>
+            <td id="RentalPeriod">@rental.RentalDateFrom.DateTime.ToString("dd/MM/yyyy") - @rental.RentalDateTo.DateTime.ToString("dd/MM/yyyy")</td>
+        </tr>
+    </table>
 
 }
 
