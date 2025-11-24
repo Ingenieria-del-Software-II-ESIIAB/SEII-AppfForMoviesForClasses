@@ -9,7 +9,14 @@
 
 @attribute [Authorize]
 
+@if (rental==null)
+{
+    <p>@error</p>
+}else
+{
+    
 
+}
 
 @code {
     [Parameter]
