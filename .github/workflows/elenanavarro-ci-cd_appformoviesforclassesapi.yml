@@ -6,10 +6,11 @@ name: Continuous Deployment of appformoviesforclassesapi latest changes
 on:
   push:
     branches:
-       - ElenaNavarro-CI-CD
-#       - development
-#    paths:
-#      - 'src/AppForMovies.API**'
+#       - ElenaNavarro-CI-CD
+#only when a push is done on developemnt on the API the API will be deployed
+       - development
+    paths:
+      - 'src/AppForMovies.API**'
 
 
   workflow_dispatch:
@@ -84,6 +85,7 @@ jobs:
           package: .
 
           
+
 
 
 
