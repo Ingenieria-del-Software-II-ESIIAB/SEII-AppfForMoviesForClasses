@@ -14,6 +14,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Purchase> Purchases { get; set; }
 
     public DbSet<Movie> Movies { get; set; }
-
+    public DbSet<Genre> Genre { get; set; }
 
 }
