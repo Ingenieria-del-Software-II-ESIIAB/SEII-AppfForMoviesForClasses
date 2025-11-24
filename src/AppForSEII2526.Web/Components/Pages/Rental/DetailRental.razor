@@ -1,0 +1,14 @@
+﻿<h3>DetailRental</h3>
+@using AppForSEII2526.Web.API
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int RentalID { get; set; }
+    private RentalForDetailDTO rental;
+    private string error = "";
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
+}
