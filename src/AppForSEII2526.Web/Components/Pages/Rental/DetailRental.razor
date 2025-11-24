@@ -1,5 +1,15 @@
-﻿<h3>DetailRental</h3>
+﻿@page "/rental/detailrental"
+
+
 @using AppForSEII2526.Web.API
+@using Microsoft.AspNetCore.Authorization
+@inject AppForMoviesAPIClient apiclient
+
+<h3>DetailRental</h3>
+
+@attribute [Authorize]
+
+
 
 @code {
     [Parameter]
@@ -10,5 +20,35 @@
 
     [CascadingParameter]
     private Task<AuthenticationState>? authenticationState { get; set; }
+
+
+    protected override async Task OnInitializedAsync() {
+
+        //we check the user is logged in
+        string userName = "";
+        if (authenticationState is not null) {
+            var authState = await authenticationState;
+            var user = authState?.User;
+
+            //we retrieve the id of the user logged in
+            if (user is not null) {
+                if (user.Identity is not null && user.Identity.IsAuthenticated && user.IsInRole("User")) {
+                    userName = user.Identity.Name;
+                }
+            }
+        }
+
+        try {
+            rental = await apiclient.GetRentalAsync(RentalID);
+        }
+        catch (ApiException exception) {
+            rental = null;
+        }
+        if ((rental == null) || (rental.UserNameCustomer != userName)) {
+            error = $"Error! You are not authorized to see this rental or there is not a rental with id={RentalID}";
+        }
+
+
+    }
 
 }
