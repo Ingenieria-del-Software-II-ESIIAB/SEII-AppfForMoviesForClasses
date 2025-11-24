@@ -1,3 +1,4 @@
+using AppForSEII2526.Web;
 using AppForSEII2526.Web.API;
 using AppForSEII2526.Web.Components;
 using AppForSEII2526.Web.Components.Account;
@@ -42,6 +43,9 @@ string? URI2API = builder.Configuration.GetValue(typeof(string), "AppForMovies_A
 //We create the service for accessing the API from where .WEB project
 builder.Services.AddScoped<AppForMoviesAPIClient>(sp => new AppForMoviesAPIClient(URI2API, new HttpClient()));
 
+//adding an In-memory state container service
+//https://learn.microsoft.com/en-us/aspnet/core/blazor/state-management/?view=aspnetcore-8.0#in-memory-state-container-service
+builder.Services.AddScoped<RentalStateContainer>();
 
 
 var app = builder.Build();
