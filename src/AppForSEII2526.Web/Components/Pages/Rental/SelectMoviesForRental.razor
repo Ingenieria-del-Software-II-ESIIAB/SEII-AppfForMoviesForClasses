@@ -1,11 +1,13 @@
 ﻿@page "/rental/selectmoviesforrental"
 
+@using Microsoft.AspNetCore.Authorization
 @using AppForSEII2526.Web.API
 @inject AppForMoviesAPIClient apiclient
 @inject ILogger<SelectMoviesForRental> logger
 @inject RentalStateContainer rentalState
 @inject NavigationManager navigation
 
+@attribute [Authorize]
 <h3>Select Movies For Rental</h3>
 <div class="container-fluid">
     <div class="row alert alert-danger" role="alert" hidden="@hideErrors">
