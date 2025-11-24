@@ -25,7 +25,12 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Genre</span>
-                        <input type="text" id="inputGenre" @bind=movieGenre class="form-control" placeholder="Genre" aria-label="Genre" aria-describedby="basic-addon1">
+                        <select class="form-select" aria-label="Default select" @bind="movieGenreSelected" id="selectGenre">
+                            <option value="All" selected>All</option>
+                            @foreach (string genreName in genresNames) {
+                                <option value="@genreName" id="genreNameSelected_@genreName">@genreName</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="col">
@@ -99,6 +104,8 @@
 </div>
 
 @code {
+    private string movieGenreSelected;
+    private ICollection<string>? genresNames = new List<string>();
     private bool hideRentingCart { get { return rental.RentalItems.Count == 0; } }
     private ICollection<MovieForRentalDTO> movies;
     private bool hideErrors { get { return errors.Length == 0; } }
@@ -147,6 +154,7 @@
 
     public async void SearchMovies() {
 
+        movieGenre = movieGenreSelected == "All" ? null : movieGenreSelected;
 
         if (rental.RentalDateFrom > rental.RentalDateTo) {
             errors="Your rental must end after than its starts";
@@ -170,7 +178,16 @@
         StateHasChanged();
     }
 
-    protected override Task OnInitializedAsync() {
+    protected override async Task OnInitializedAsync() {
+
+        try {
+            genresNames = await apiclient.GetGenresAsync(null);
+        }
+        catch (ApiException ex) {
+            if (genresNames == null) genresNames = new List<string>() { "All", };
+            logger.LogError("Error! There was an error while connecting to the GetGenresAsync service");
+        }
+
         //the type of RentalDateFrom is DateTimeOffset, it is required a conversion
         //https://learn.microsoft.com/es-es/dotnet/standard/datetime/converting-between-datetime-and-offset
         _from = (_from == new DateTime(1, 1, 1)) ?
@@ -187,7 +204,7 @@
 
         SearchMovies();
 
-        return base.OnInitializedAsync();
+       // return base.OnInitializedAsync();
     }
 
     private void RentMovies() {
