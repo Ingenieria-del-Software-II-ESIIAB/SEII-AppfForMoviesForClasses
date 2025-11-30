@@ -55,7 +55,7 @@
         <div class="col-md">
             <div class="form-floating">
                 @*this button will be used to ask the user if he want to proceed to rent the movies*@
-                <button class="btn btn-primary" type="submit" id="Submit">
+                <button class="btn btn-primary" type="submit" id="Submit" disabled="@rentalButtonDisabled">
                     Rent your movies
                 </button>
             </div>
@@ -107,6 +107,8 @@
 @code {
     private string messageError = "";
     private bool hideErrors { get { return messageError.Length == 0; } }
+    //rentalbutton will be disabled if there are not movies in the renting cart
+    private bool rentalButtonDisabled { get { return (rental.RentalItems == null || rental.RentalItems.Count == 0); } }
     private bool DialogIsOpen;
     private decimal TotalCost { 
         get {
