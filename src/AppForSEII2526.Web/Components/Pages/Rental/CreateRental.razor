@@ -11,7 +11,29 @@
 @* rental is the object that will be edited thanks to the form *@
 <EditForm Model="rental" OnValidSubmit="OpenDialog">
     <div class="row">
-
+        <DataAnnotationsValidator />
+        <ValidationSummary/>
+    </div>
+    <div class="row g-3">
+        <div class="col-md">
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="rental.NameCustomer" class="form-control" id="Name" />
+                <label for="Name">Name </label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="rental.SurnameCustomer" class="form-control" id="Surname" />
+                <label for="Name">Name </label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="rental.DeliveryAddress" class="form-control" id="DeliveryAddress" />
+                <label for="DeliveryAddress">Delivery Address</label>
+            </div>
+        </div>
+    </div>
         <div class="col-md">
             <div class="form-floating">
                 @*this button will be used to ask the user if he want to proceed to rent the movies*@
@@ -20,7 +42,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    
     <div class="mh-100 table-responsive">
         <table class="table table-condensed table-hover" id="TableOfRentalItems">
             <thead>
@@ -58,8 +80,7 @@
 @code {
 
     private bool DialogIsOpen;
-
-
+    private object? errors;
     private RentalForCreateDTO rental => rentalState.Rental;
 
     private void OpenDialog()
