@@ -34,6 +34,18 @@
             </div>
         </div>
     </div>
+    <div class="row g-2">
+        <div class="col-md">
+            <div class="form-floating">
+                @*a dropdown for selecting the payment method*@
+                <InputSelect class="form-select" @bind-Value="@rental.PaymentMethod" id="PaymentMethod">
+                    <option value="@PaymentMethodType.CreditCard" default> CreditCard</option>
+                    <option value="@PaymentMethodType.PayPal"> PayPal</option>
+                    <option value="@PaymentMethodType.Cash"> Cash</option>
+                </InputSelect>
+                <label for="PaymentMethod">Payment Method</label>
+            </div>
+        </div>
         <div class="col-md">
             <div class="form-floating">
                 @*this button will be used to ask the user if he want to proceed to rent the movies*@
@@ -42,6 +54,8 @@
                 </button>
             </div>
         </div>
+    </div>
+
     
     <div class="mh-100 table-responsive">
         <table class="table table-condensed table-hover" id="TableOfRentalItems">
@@ -80,7 +94,7 @@
 @code {
 
     private bool DialogIsOpen;
-    private object? errors;
+
     private RentalForCreateDTO rental => rentalState.Rental;
 
     private void OpenDialog()
