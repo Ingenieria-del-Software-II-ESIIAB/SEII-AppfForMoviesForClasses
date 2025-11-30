@@ -1,6 +1,6 @@
 ﻿@page "/rentals/createrental"
 
-
+@using AppForSEII2526.Web.Components.Shared
 @using AppForSEII2526.Web.API
 @inject AppForMoviesAPIClient apiclient
 @inject ILogger<CreateRental> logger
@@ -23,15 +23,34 @@
     </div>
 </EditForm>
 
+@*a modal popup dialog for checking if user wants to proceed to rent*@
+@if (DialogIsOpen)
+{
+    <Dialog Caption="Rental movies"
+    Message="Do you want to proceed to rent the selected movies?"
+    OnClose="@OnDialogClose"
+    Type=Dialog.Category.SaveNot>
+    </Dialog>
+}
 
 @code {
 
+    private bool DialogIsOpen;
 
 
     private RentalForCreateDTO rental => rentalState.Rental;
 
     private void OpenDialog()
     {
-        
+        DialogIsOpen = true;
+    }
+
+    private async Task OnDialogClose(bool isOk) {
+
+        DialogIsOpen = false;
+        if (isOk) {
+            // Process the data introduced by the user if they are valid
+
+        }
     }
  }
