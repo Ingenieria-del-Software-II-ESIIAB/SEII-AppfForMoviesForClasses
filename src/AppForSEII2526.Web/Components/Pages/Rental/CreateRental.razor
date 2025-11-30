@@ -1,7 +1,15 @@
 ﻿@page "/rentals/createrental"
 
-<h3>CreateRental</h3>
+
+@using AppForSEII2526.Web.API
+@inject AppForMoviesAPIClient apiclient
+@inject ILogger<CreateRental> logger
+@inject RentalStateContainer rentalState
+
+<h3>Create Rental</h3>
+
+
 
 @code {
-
+    private RentalForCreateDTO rental => rentalState.Rental;
 }
