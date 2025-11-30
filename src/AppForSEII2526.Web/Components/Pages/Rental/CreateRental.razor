@@ -2,9 +2,12 @@
 @inject NavigationManager navigation
 @using AppForSEII2526.Web.Components.Shared
 @using AppForSEII2526.Web.API
+@using Microsoft.AspNetCore.Authorization
 @inject AppForMoviesAPIClient apiclient
 @inject ILogger<CreateRental> logger
 @inject RentalStateContainer rentalState
+
+@attribute [Authorize]
 
 <h3>Create Rental</h3>
 
@@ -12,7 +15,7 @@
 <EditForm Model="rental" OnValidSubmit="OpenDialog">
     <div class="row">
         <DataAnnotationsValidator />
-        <ValidationSummary/>
+        <ValidationSummary class="row alert alert-danger" />
     </div>
     <div class="row g-3">
         <div class="col-md">
@@ -105,8 +108,8 @@
         get {
             int days = (rental.RentalDateTo.DateTime - rental.RentalDateFrom.DateTime).Days;
             double price = rental.RentalItems.Sum(ri => ri.PriceForRenting * days);
-                return Convert.ToDecimal(price);
-            }
+            return Convert.ToDecimal(price);
+        }
     }
     private void ModifyRentalItems() {
         navigation.NavigateTo("/rental/selectmoviesforrental");
@@ -126,4 +129,26 @@
 
         }
     }
+
+    protected override async Task OnInitializedAsync() {
+
+        if (authenticationState is not null) {
+            var authState = await authenticationState;
+            var user = authState?.User;
+
+            if (user is not null) {
+                if (user.Identity is not null && user.Identity.IsAuthenticated) {
+                    rental.UserNameCustomer = user.Identity.Name;
+                }
+            }
+            rental.NameCustomer = rental.NameCustomer == null ? "" : rental.NameCustomer;
+            rental.SurnameCustomer = rental.SurnameCustomer == null ? "" : rental.SurnameCustomer;
+            rental.DeliveryAddress = rental.DeliveryAddress == null ? "" : rental.DeliveryAddress;
+
+        }
+    }
+
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
  }
