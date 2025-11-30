@@ -21,6 +21,28 @@
             </div>
         </div>
     </div>
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TableOfRentalItems">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Price For Renting</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in rental.RentalItems) {
+                    <tr id="MovieData_@item.Title">
+                        <td>@item.Title</td>
+                        <td>@item.Genre</td>
+                        <td>@item.PriceForRenting</td>
+                        <td><InputText @bind-Value="item.Description" class="form-control" id="@($"description_{item.MovieID}")" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </EditForm>
 
 @*a modal popup dialog for checking if user wants to proceed to rent*@
