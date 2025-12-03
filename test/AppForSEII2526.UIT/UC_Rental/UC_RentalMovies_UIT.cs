@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using AppForSEII2526.UIT.Shared;
@@ -41,7 +42,7 @@ namespace AppForSEII2526.UIT.UC_Rental {
         [InlineData(movieTitle1, movieGenre1, movieReleaseDate1, moviePriceForRenting1, "Last of", "")]
         [InlineData(movieTitle2, movieGenre2, movieReleaseDate2, moviePriceForRenting2, "", "Drama")]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void UC2_AF1_UC2_4_5_6_filtering(string movieTitle, string movieGenre, string movieReleaseDate, string moviePriceForRenting,
+        public void UC2_AF1_UC2_4_5_filtering(string movieTitle, string movieGenre, string movieReleaseDate, string moviePriceForRenting,
             string filterTitle, string filterGenre)
         {
             //Arrange
@@ -56,7 +57,24 @@ namespace AppForSEII2526.UIT.UC_Rental {
             Assert.True(selectMoviesForRental_PO.CheckListOfMovies(expectedMovies));
 
         }
+        [Fact(Skip = "first run dbo.Movies.data.UpdateQuantityAvailable.sql, after running the test case run dbo.Movies.data.UpdateQuantityAvailableto100")]
+        [Trait("LevelTesting", "Funcional Testing")]
 
+        public void UC2_AF1_UC2_6_filtering() {
+            //Arrange
+            InitialStepsForRentalMovies();
+            var expectedMovies = new List<string[]> { new string[] { movieTitle2, movieGenre2, movieReleaseDate2, moviePriceForRenting2 }, };
+
+            string from = DateTime.Today.AddDays(2).ToString("dd/MM/yyyy");
+            string to = DateTime.Today.AddDays(3).ToString("dd/MM/yyyy");
+            //Act
+            selectMoviesForRental_PO.SearchMovies("", "", from, to);
+
+            //Assert
+
+            Assert.True(selectMoviesForRental_PO.CheckListOfMovies(expectedMovies));
+
+        }
 
 
 
