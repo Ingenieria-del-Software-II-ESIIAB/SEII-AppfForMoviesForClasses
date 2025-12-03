@@ -13,6 +13,7 @@ namespace AppForSEII2526.UIT.UC_Rental {
         By inputFrom = By.Id("fromDate");
         By inputTo = By.Id("toDate");
         By tableOfMoviesBy = By.Id("TableOfMovies");
+        By errorShownBy = By.Id("ErrorsShown");
 
         public SelectMoviesForRental_PO(IWebDriver driver, ITestOutputHelper output) : base(driver, output) {
         }
@@ -40,5 +41,13 @@ namespace AppForSEII2526.UIT.UC_Rental {
 
             return CheckBodyTable(expectedMovies, tableOfMoviesBy);
         }
+
+        public bool CheckMessageError(string errorMessage) {
+            IWebElement actualErrorShown = _driver.FindElement(errorShownBy);
+            _output.WriteLine($"actual Message shown:{actualErrorShown.Text}");
+            return actualErrorShown.Text.Contains(errorMessage);
+        }
+
+
     }
 }

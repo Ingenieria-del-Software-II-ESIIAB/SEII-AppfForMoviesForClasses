@@ -76,6 +76,36 @@ namespace AppForSEII2526.UIT.UC_Rental {
 
         }
 
+        public static IEnumerable<object[]> TestCasesFor_UC2_4_5_AF2_errorindates() {
+            var allTests = new List<object[]> {
+                new object[] { DateTime.Today.AddDays(-1).ToString("dd/MM/yyyy"), DateTime.Today.AddDays(2).ToString("dd/MM/yyyy"), "Your rental period must be later",  },
+                //cannot be checked if datetime is before today, because the next condition is checked before
+                new object[] { DateTime.Today.AddDays(-2).ToString("dd/MM/yyyy"), DateTime.Today.AddDays(-1).ToString("dd/MM/yyyy"), "Your rental period must be later", },
+                new object[] { DateTime.Today.AddDays(7).ToString("dd/MM/yyyy"), DateTime.Today.AddDays(5).ToString("dd/MM/yyyy"), "Your rental must end after than its starts", },
+            };
+
+            return allTests;
+        }
+
+        [Theory]
+        [MemberData(nameof(TestCasesFor_UC2_4_5_AF2_errorindates))]
+        [Trait("LevelTesting", "Funcional Testing")]
+        public void UC2_7_8_9_AF2_errorindates(string from, string to, string error) {
+            //Arrange
+
+
+            //Act
+            InitialStepsForRentalMovies();
+
+            selectMoviesForRental_PO.SearchMovies("", "", from, to);
+
+            //Assert
+
+            //this message will be shown if assert fails
+            Assert.True(selectMoviesForRental_PO.CheckMessageError(error), $"Error in the message box for test {from} - {to}");
+
+        }
+
 
 
 
