@@ -11,9 +11,10 @@ namespace AppForSEII2526.UIT.UC_Rental {
         By inputGenre = By.Id("selectGenre");
         By buttonSearchMovies = By.Id("searchMovies");
         By inputFrom = By.Id("fromDate");
+        By inputTo = By.Id("toDate");
         public SelectMoviesForRental_PO(IWebDriver driver, ITestOutputHelper output) : base(driver, output) {
         }
-        public void SearchMovies(string title, string genre, string from) {
+        public void SearchMovies(string title, string genre, string from, string to) {
             //wait for the webelement to be clickable
             WaitForBeingClickable(inputTitle);
             _driver.FindElement(inputTitle).SendKeys(title);
@@ -23,6 +24,9 @@ namespace AppForSEII2526.UIT.UC_Rental {
 
             if (from!="") 
                 _driver.FindElement(inputFrom).SendKeys(from);
+
+            if (to != "")
+                _driver.FindElement(inputTo).SendKeys(to);
 
             _driver.FindElement(buttonSearchMovies).Click();
 
