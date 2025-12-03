@@ -12,6 +12,8 @@ namespace AppForSEII2526.UIT.UC_Rental {
         By buttonSearchMovies = By.Id("searchMovies");
         By inputFrom = By.Id("fromDate");
         By inputTo = By.Id("toDate");
+        By tableOfMoviesBy = By.Id("TableOfMovies");
+
         public SelectMoviesForRental_PO(IWebDriver driver, ITestOutputHelper output) : base(driver, output) {
         }
         public void SearchMovies(string title, string genre, string from, string to) {
@@ -31,6 +33,12 @@ namespace AppForSEII2526.UIT.UC_Rental {
             _driver.FindElement(buttonSearchMovies).Click();
 
         
+        }
+
+
+        public bool CheckListOfMovies(List<string[]> expectedMovies) {
+
+            return CheckBodyTable(expectedMovies, tableOfMoviesBy);
         }
     }
 }
