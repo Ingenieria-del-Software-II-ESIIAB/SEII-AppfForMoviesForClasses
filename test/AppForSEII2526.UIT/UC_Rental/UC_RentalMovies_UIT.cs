@@ -33,16 +33,19 @@ namespace AppForSEII2526.UIT.UC_Rental {
             //we click on the menu
             _driver.FindElement(By.Id("CreateRental")).Click();
         }
-        [Fact]
+
+        [Theory]
+        [InlineData(movieTitle1, movieGenre1, movieReleaseDate1, moviePriceForRenting1, "Last of", "")]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void UC2_AF1_UC2_4_5_6_filtering()
+        public void UC2_AF1_UC2_4_5_6_filtering(string movieTitle, string movieGenre, string movieReleaseDate, string moviePriceForRenting,
+            string filterTitle, string filterGenre)
         {
             //Arrange
             InitialStepsForRentalMovies();
-            var expectedMovies = new List<string[]> { new string[] { movieTitle1, movieGenre1, movieReleaseDate1, moviePriceForRenting1 }, };
+            var expectedMovies = new List<string[]> { new string[] { movieTitle, movieGenre, movieReleaseDate, moviePriceForRenting}, };
 
             //Act
-            selectMoviesForRental_PO.SearchMovies("Last of", "", "", "");
+            selectMoviesForRental_PO.SearchMovies(filterTitle, filterGenre, "", "");
 
             //Assert
 
