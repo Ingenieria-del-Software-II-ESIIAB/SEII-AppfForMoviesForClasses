@@ -9,10 +9,10 @@ namespace AppForSEII2526.UIT.UC_Rental {
     public class UC_RentalMovies_UIT : UC_UIT {
         private SelectMoviesForRental_PO selectMoviesForRental_PO;
         private const int movieId1 = 1;
-        private const string movieTitle1 = "The man in the high castle";
+        private const string movieTitle1 = "The last of us";
         private const string movieGenre1 = "Sci - Fi";
-        private const string moviePriceForRenting1 = "4";
-        private const string movieReleaseDate1 = "1/1/2015";
+        private const string moviePriceForRenting1 = "1";
+        private const string movieReleaseDate1 = "15/03/2023";
 
 
 
@@ -39,7 +39,7 @@ namespace AppForSEII2526.UIT.UC_Rental {
         {
             //Arrange
             InitialStepsForRentalMovies();
-            var expectedMovies = new List<string[]> { new string[] { movieTitle1, movieGenre1, movieReleaseDate1, moviePriceForRenting1 },};
+            var expectedMovies = new List<string[]> { new string[] { movieTitle1, movieGenre1, movieReleaseDate1, moviePriceForRenting1 }, };
 
             //Act
             selectMoviesForRental_PO.SearchMovies("Last of", "", "", "");

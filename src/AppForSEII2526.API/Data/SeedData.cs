@@ -113,13 +113,13 @@ namespace AppForSEII2526.API.Data {
                     genres.Add(genre);
             }
             if (dbcontext.Movies.FirstOrDefault(m => m.Title == "The last of us") == null) {
-                movie = new Movie("The lord of the rings", genres[0], new DateTime(2011, 10, 20), 10.0m, 5, 1.0m, 2);
+                movie = new Movie("The last of us", genres[0], new DateTime(2023, 3, 15), 10.0m, 5, 1.0m, 2);
                 dbcontext.Movies.Add(movie);
 
             }
 
             if (dbcontext.Movies.FirstOrDefault(m => m.Title == "The man in the high castle") == null) {
-                movie = new Movie("The mechanic orange", genres[1], new DateTime(1988, 02, 23), 15.0m, 10, 2.0m, 10);
+                movie = new Movie("The man in the high castle", genres[1], new DateTime(2015, 01, 15), 15.0m, 10, 3.0m, 10);
                 dbcontext.Movies.Add(movie);
             }
 
@@ -147,7 +147,9 @@ namespace AppForSEII2526.API.Data {
 
         public static void SeedRental(ApplicationDbContext dbcontext, ApplicationUser user) {
 
-            if (dbcontext.Rentals.FirstOrDefault(p => p.Id == 1) == null) {
+            Rental? rentalExist= dbcontext.Rentals.FirstOrDefault(p => p.Id == 1);
+
+            if (rentalExist == null) {
                 var movie = dbcontext.Movies.First();
                 var rental = new Rental("Avda. España s/n, Albacete 02071", "Elena", "Navarro Martínez", user,
                     DateTime.Today.AddDays(2), DateTime.Today.AddDays(5), PaymentMethodType.CreditCard, new List<RentalItem>());
@@ -159,9 +161,13 @@ namespace AppForSEII2526.API.Data {
 
                 dbcontext.Rentals.Add(rental);
             }
+            else { 
+                //we update the rental date so that we have only a rental for the dates we are using for testing
+                rentalExist.RentalDate= DateTime.Today.AddDays(2);
+            }
 
 
-            dbcontext.SaveChanges();
+                dbcontext.SaveChanges();
 
         }
     }

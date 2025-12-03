@@ -26,8 +26,9 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7067;http://localhost:5254",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "DBConnection2Use": "SQLite"
+        "ASPNETCORE_ENVIRONMENT": "Development"
+        // commenting this line, in case you have it, we will use the localdb
+        // "DBConnection2Use": "SQLite"
 
       }
     },
