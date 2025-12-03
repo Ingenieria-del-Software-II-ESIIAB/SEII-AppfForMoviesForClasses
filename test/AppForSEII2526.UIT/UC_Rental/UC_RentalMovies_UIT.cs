@@ -106,7 +106,21 @@ namespace AppForSEII2526.UIT.UC_Rental {
 
         }
 
+        [Fact]
+        [Trait("LevelTesting", "Funcional Testing")]
 
+        public void UC2_AF1_UC2_11_RentingNotavailable() {
+            //Arrange
+            InitialStepsForRentalMovies();
+            //Act
+            selectMoviesForRental_PO.AddMovieToRentingCart(movieTitle1);
+            selectMoviesForRental_PO.RemoveMovieFromRentingCart(movieTitle1);
+
+            //Assert
+
+            Assert.True(selectMoviesForRental_PO.RentingNotAvailable());
+
+        }
 
 
     }

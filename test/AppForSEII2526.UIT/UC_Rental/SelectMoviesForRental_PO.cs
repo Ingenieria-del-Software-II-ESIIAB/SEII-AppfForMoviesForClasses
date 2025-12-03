@@ -14,6 +14,7 @@ namespace AppForSEII2526.UIT.UC_Rental {
         By inputTo = By.Id("toDate");
         By tableOfMoviesBy = By.Id("TableOfMovies");
         By errorShownBy = By.Id("ErrorsShown");
+        By buttonRentMovies=By.Id("rentMovieButton");
 
         public SelectMoviesForRental_PO(IWebDriver driver, ITestOutputHelper output) : base(driver, output) {
         }
@@ -48,6 +49,22 @@ namespace AppForSEII2526.UIT.UC_Rental {
             return actualErrorShown.Text.Contains(errorMessage);
         }
 
+        public void AddMovieToRentingCart(string movieTitle) {
+            WaitForBeingClickable(By.Id("movieToRent_" + movieTitle));
+
+            _driver.FindElement(By.Id("movieToRent_"+ movieTitle)).Click();
+        }
+
+        public void RemoveMovieFromRentingCart(string movieTitle) {
+            WaitForBeingClickable(By.Id("removeMovie_" + movieTitle));
+            _driver.FindElement(By.Id("removeMovie_" + movieTitle)).Click();
+        }
+
+        public bool RentingNotAvailable() {
+            //the button is not Displayed=hidden
+
+            return _driver.FindElement(buttonRentMovies).Displayed==false;
+        }
 
     }
 }
