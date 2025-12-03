@@ -20,7 +20,7 @@ namespace AppForSEII2526.UIT.Shared {
         public string _URI {
             get {
                 //set url of your web page 
-                return "https://localhost:7083/";
+                return "https://localhost:7081/";
 
             }
         }
