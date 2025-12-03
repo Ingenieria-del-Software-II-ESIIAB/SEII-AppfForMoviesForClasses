@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium.Support.UI;
 
 namespace AppForSEII2526.UIT.UC_Rental {
     public class SelectMoviesForRental_PO : PageObject {
@@ -11,10 +12,14 @@ namespace AppForSEII2526.UIT.UC_Rental {
         By buttonSearchMovies = By.Id("searchMovies");
         public SelectMoviesForRental_PO(IWebDriver driver, ITestOutputHelper output) : base(driver, output) {
         }
-        public void SearchMovies(string title) {
+        public void SearchMovies(string title, string genre) {
             //wait for the webelement to be clickable
             WaitForBeingClickable(inputTitle);
             _driver.FindElement(inputTitle).SendKeys(title);
+            if (genre == "") genre = "All";
+            SelectElement selectElement = new SelectElement(_driver.FindElement(inputGenre));
+            selectElement.SelectByText(genre);
+
             _driver.FindElement(buttonSearchMovies).Click();
 
         
