@@ -13,7 +13,10 @@ namespace AppForSEII2526.UIT.UC_Rental {
         private const string movieGenre1 = "Sci - Fi";
         private const string moviePriceForRenting1 = "1";
         private const string movieReleaseDate1 = "15/03/2023";
-
+        private const string movieTitle2 = "The man in the high castle";
+        private const string movieGenre2 = "Drama";
+        private const string moviePriceForRenting2 = "3";
+        private const string movieReleaseDate2 = "15/01/2015";
 
 
 
@@ -36,6 +39,7 @@ namespace AppForSEII2526.UIT.UC_Rental {
 
         [Theory]
         [InlineData(movieTitle1, movieGenre1, movieReleaseDate1, moviePriceForRenting1, "Last of", "")]
+        [InlineData(movieTitle2, movieGenre2, movieReleaseDate2, moviePriceForRenting2, "", "Drama")]
         [Trait("LevelTesting", "Funcional Testing")]
         public void UC2_AF1_UC2_4_5_6_filtering(string movieTitle, string movieGenre, string movieReleaseDate, string moviePriceForRenting,
             string filterTitle, string filterGenre)
@@ -52,6 +56,8 @@ namespace AppForSEII2526.UIT.UC_Rental {
             Assert.True(selectMoviesForRental_PO.CheckListOfMovies(expectedMovies));
 
         }
+
+
 
 
 
