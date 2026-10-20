@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: read #This is required for actions/checkout
     env:
-      API: ./src/AppForSEII2526.API/AppForMovies.API.csproj
+      API: ./src/AppForSEII2526.API/AppForSEII2526.API.csproj
 
     steps:
       - uses: actions/checkout@v4
