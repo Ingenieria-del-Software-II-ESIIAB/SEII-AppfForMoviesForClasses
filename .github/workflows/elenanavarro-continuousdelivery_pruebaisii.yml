@@ -24,12 +24,17 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.x'
+          
+      - name: Restore dependencies        
+        run: |  
+          dotnet restore ${{ env.API }}           
 
       - name: Build with dotnet
-        run: dotnet build ${{ env.API }}  --configuration Release
+        run: |
+          dotnet build ${{ env.API }}  --configuration Release --no-restore
 
       - name: dotnet publish
-        run: dotnet publish  ${{ env.API }} -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ${{ env.API }}  -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
