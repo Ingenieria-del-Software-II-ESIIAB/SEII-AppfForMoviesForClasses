@@ -4,17 +4,9 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - pruebaisii
 
 on:
-#  push:
-#    branches:
-#      - 'development'
-      
-  pull_request: 
+  push:
     branches:
-      - 'development'
-      
-# types: [closed] triggers the workflow when a PR is closed.  
-    types: 
-      - closed
+      - 'ElenaNavarro-ContinuousDelivery'
   workflow_dispatch:
 
 jobs:
@@ -22,29 +14,20 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read #This is required for actions/checkout
-    env:
-      API: ./src/AppForSEII2526.API/AppForSEII2526.API.csproj
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: development
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.x'
-          
-      - name: Restore dependencies        
-        run: |  
-          dotnet restore ${{ env.API }}           
 
       - name: Build with dotnet
-        run: |
-          dotnet build ${{ env.API }}  --configuration Release --no-restore
+        run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ${{ env.API }}  -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -53,26 +36,30 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
-  # it ensures the job runs only if the PR was merged.If someone closes the PR without merging, the deployment job is skipped.
-    if: github.event.pull_request.merged==true 
     runs-on: ubuntu-latest
     needs: build
     permissions:
       id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout   
+      contents: read #This is required for actions/checkout
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
       
-    # The logging step is deleted as a secret of the repo is used    
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F9AD654E66C74A688BC14521FCB64BD3 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4611FF5A2F2F4B57BEC1331F82099B8E }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0C872D1D3F2546C68418547B1003F308 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'pruebaisii'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          slot-name: 'Production'
           package: .
           
