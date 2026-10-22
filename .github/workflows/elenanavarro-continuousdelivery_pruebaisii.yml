@@ -69,9 +69,10 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F02C18D2455E4B1F930CBF02ED999AE3 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B38EB739DBFD4F43BC7C08EA4A0FC473 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6D220D11332844CEA5D4832B68AEF8D4 }}
+           app-name: 'pruebaisii'
+           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }
+           package: '.'
+          
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
