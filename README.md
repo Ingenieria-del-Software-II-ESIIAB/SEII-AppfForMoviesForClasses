@@ -1,5 +1,13 @@
 # SEII-AppfForMoviesForClasses Repository Overview.
 
+testing pipelines
+
+more testing
+
+another
+
+checking
+
 ## Purpose
 This repository serves as a **template for a student software engineering project** focused on developing a movie-related application. It is designed to guide student teams through the collaborative development process as part of their coursework.
 
